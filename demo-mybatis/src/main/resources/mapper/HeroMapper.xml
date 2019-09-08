@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.demomybatis.dao.HeroDao">
+	<resultMap id="BaseResultMap" type="com.example.springboot.demomybatis.domain.Hero">
+		<result column="number" property="number" />
+		<result column="name" property="name" />
+		<result column="country" property="country" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		`number` , `name` , country
+	</sql>
+	<insert id="insertHero" parameterType="com.example.springboot.demomybatis.domain.Hero"
+			keyProperty="number" useGeneratedKeys="true">
+		INSERT INTO hero (`name` , country)
+		VALUES (#{name},#{country})
+	</insert>
+	<delete id="deleteHero" parameterType="java.lang.String">
+		DELETE FROM hero
+		where `name` = #{name}
+	</delete>
+
+	<select id="findByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from hero
+		where `name` = #{name}
+	</select>
+	<select id="getAllHero" resultType="com.example.springboot.demomybatis.domain.Hero">
+		select
+		<include refid="Base_Column_List" />
+		from hero
+	</select>
+
+</mapper>
